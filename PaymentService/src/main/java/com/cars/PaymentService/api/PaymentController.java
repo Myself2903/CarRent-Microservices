@@ -18,7 +18,7 @@ import com.cars.PaymentService.dto.PaymentToSaveDto;
 import com.cars.PaymentService.service.PaymentService;
 
 @RestController
-@RequestMapping("/api/paymentService")
+@RequestMapping("/api/payment-service")
 public class PaymentController {
     private final PaymentService paymentService;
 

@@ -8,11 +8,8 @@ services:
       POSTGRES_DB: ms_booking
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
-      ports:
-        5431:5431
-      expose:
-        5431
-      command: -p 5431
+    ports:
+      - "5431:5432"  # Mapea el puerto 5432 del contenedor al puerto 5431 del host
 
   db-inventory:
     container_name: db-inventory
@@ -22,11 +19,8 @@ services:
       POSTGRES_DB: ms_inventory
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
-      ports:
-        5432:5432
-      expose:
-        5432
-      command: -p 5432
+    ports:
+      - "5434:5432"  # Mapea el puerto 5432 del contenedor al puerto 5434 del host
 
   db-payment:
     container_name: db-payment
@@ -36,8 +30,5 @@ services:
       POSTGRES_DB: ms_payment
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
-      ports:
-        5433:5433
-      expose:
-        5433
-      command: -p 5433
+    ports:
+      - "5433:5432"  # Mapea el puerto 5432 del contenedor al puerto 5433 del host
