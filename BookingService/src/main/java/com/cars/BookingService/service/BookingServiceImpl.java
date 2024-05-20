@@ -1,5 +1,6 @@
 package com.cars.BookingService.service;
 
+import com.cars.BookingService.client.BookingFeignClient;
 import com.cars.BookingService.dto.BookingDto;
 import com.cars.BookingService.dto.BookingMapper;
 import com.cars.BookingService.dto.BookingToSaveDto;
@@ -8,6 +9,7 @@ import com.cars.BookingService.repository.BookingRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +25,18 @@ public class BookingServiceImpl implements BookingService{
         this.bookingRepository = bookingRepository;
     }
 
+    @Autowired
+    private BookingFeignClient bookingFeignClient;
+
+    public Object reserveCar(UUID id){
+        return bookingFeignClient.reserveCar(id);
+    }
+
     @Override
     public BookingDto saveBooking(BookingToSaveDto bookingToSaveDto) {
         Booking booking = bookingMapper.saveDtoToEntity(bookingToSaveDto);
         Booking savedBooking = bookingRepository.save(booking);
+        reserveCar(bookingToSaveDto.carId());
         return bookingMapper.entityToDto(savedBooking);
     }
 
