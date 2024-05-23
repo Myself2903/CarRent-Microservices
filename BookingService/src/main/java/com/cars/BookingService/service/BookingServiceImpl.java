@@ -1,6 +1,7 @@
 package com.cars.BookingService.service;
 
 import com.cars.BookingService.client.BookingFeignClient;
+import com.cars.BookingService.client.ResponseCar;
 import com.cars.BookingService.dto.BookingDto;
 import com.cars.BookingService.dto.BookingMapper;
 import com.cars.BookingService.dto.BookingToSaveDto;
@@ -28,15 +29,15 @@ public class BookingServiceImpl implements BookingService{
     @Autowired
     private BookingFeignClient bookingFeignClient;
 
-    public Object reserveCar(UUID id){
+    public ResponseCar reserveCar(UUID id){
         return bookingFeignClient.reserveCar(id);
     }
 
     @Override
     public BookingDto saveBooking(BookingToSaveDto bookingToSaveDto) {
+        reserveCar(bookingToSaveDto.carId());
         Booking booking = bookingMapper.saveDtoToEntity(bookingToSaveDto);
         Booking savedBooking = bookingRepository.save(booking);
-        reserveCar(bookingToSaveDto.carId());
         return bookingMapper.entityToDto(savedBooking);
     }
 

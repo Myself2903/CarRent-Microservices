@@ -10,7 +10,6 @@ public interface BookingMapper {
     BookingDto entityToDto(Booking booking);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "carId", expression = "java(java.util.UUID.randomUUID())")
     @Mapping(target = "customerId", expression = "java(java.util.UUID.randomUUID())")
     Booking saveDtoToEntity(BookingToSaveDto bookingToSaveDto);
 
